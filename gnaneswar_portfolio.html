@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challa Gnaneswar — SAP ABAP Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--sap-blue:#0070F3;--accent:#00C4A1;--warm:#FF6B35;--bg:#05080F;--bg2:#0C1220;--surface:#141d2e;--border:rgba(255,255,255,0.07);--border2:rgba(0,196,161,0.3);--text:#E8EDF5;--muted:#7B8FAB;--font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");background-size:200px;pointer-events:none;z-index:0;opacity:.4;}
+  body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,112,243,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,112,243,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;border-bottom:1px solid var(--border);background:rgba(5,8,15,0.88);backdrop-filter:blur(20px);}
+  .nav-logo{font-family:var(--font-head);font-weight:800;font-size:1.1rem;letter-spacing:-.02em;color:var(--text);text-decoration:none;}
+  .nav-logo span{color:var(--accent);}
+  .nav-links{display:flex;gap:1.5rem;list-style:none;}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--accent);}
+  section{position:relative;z-index:1;}
+
+  #hero{min-height:100vh;display:flex;align-items:center;padding:8rem 4rem 4rem;position:relative;overflow:hidden;}
+  .hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,112,243,0.12) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none;}
+  .hero-glow2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,161,0.08) 0%,transparent 70%);bottom:-100px;left:10%;pointer-events:none;}
+  .hero-content{max-width:900px;}
+  .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,196,161,0.1);border:1px solid rgba(0,196,161,0.3);border-radius:2rem;padding:.3rem 1rem;font-family:var(--font-mono);font-size:.75rem;color:var(--accent);letter-spacing:.05em;margin-bottom:2rem;}
+  .hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+  .hero-name{font-family:var(--font-head);font-weight:800;font-size:clamp(3.5rem,8vw,7rem);line-height:.95;letter-spacing:-.03em;margin-bottom:1rem;}
+  .hero-name .line2{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.25);}
+  .hero-sub{font-family:var(--font-mono);color:var(--sap-blue);font-size:1rem;margin-bottom:1.5rem;letter-spacing:.05em;}
+  .hero-desc{color:var(--muted);font-size:1.05rem;max-width:620px;line-height:1.8;margin-bottom:3rem;}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:.4rem;font-family:var(--font-body);font-size:.9rem;font-weight:500;text-decoration:none;transition:all .2s;cursor:pointer;border:none;}
+  .btn-primary{background:var(--sap-blue);color:#fff;}
+  .btn-primary:hover{background:#0060d0;transform:translateY(-1px);}
+  .btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--accent);}
+  .btn-ghost:hover{background:rgba(0,196,161,0.08);transform:translateY(-1px);}
+  .hero-stats{display:flex;gap:3rem;flex-wrap:wrap;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);}
+  .stat-num{font-family:var(--font-head);font-size:2.2rem;font-weight:800;color:var(--text);letter-spacing:-.03em;display:block;}
+  .stat-label{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+  .section-wrap{max-width:1100px;margin:0 auto;padding:6rem 4rem;}
+  .section-eyebrow{font-family:var(--font-mono);font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+  .section-eyebrow::before{content:'';display:inline-block;width:32px;height:1px;background:var(--accent);}
+  .section-title{font-family:var(--font-head);font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem;}
+  .section-desc{color:var(--muted);font-size:1rem;max-width:560px;line-height:1.8;margin-bottom:3.5rem;}
+
+  /* OBJECTIVE */
+  #objective{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .objective-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:.75rem;padding:2rem 2.5rem;position:relative;overflow:hidden;}
+  .objective-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,196,161,0.04) 0%,transparent 60%);pointer-events:none;}
+  .objective-box p{font-size:1.05rem;color:var(--text);line-height:1.85;font-style:italic;}
+  .objective-quote{font-family:var(--font-head);font-size:4rem;color:var(--accent);opacity:.15;position:absolute;top:.5rem;left:1.5rem;line-height:1;}
+
+  /* ABOUT */
+  #about{background:var(--bg);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+  .about-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:2rem;position:relative;overflow:hidden;}
+  .about-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,112,243,0.05) 0%,transparent 60%);pointer-events:none;}
+  .about-card-icon{width:44px;height:44px;border-radius:.6rem;background:rgba(0,112,243,0.15);border:1px solid rgba(0,112,243,0.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.25rem;}
+  .about-card h3{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--text);}
+  .about-card p{font-size:.875rem;color:var(--muted);line-height:1.7;}
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+  /* TRAINING */
+  #training{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .training-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+  .training-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1.75rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+  .training-card:hover{border-color:rgba(0,196,161,0.4);transform:translateY(-3px);}
+  .training-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--sap-blue));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+  .training-card:hover::after{transform:scaleX(1);}
+  .training-icon{font-size:1.8rem;margin-bottom:1rem;display:block;}
+  .training-card h3{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.5rem;}
+  .training-card p{font-size:.85rem;color:var(--muted);line-height:1.7;}
+  .training-badge{display:inline-block;margin-top:1rem;background:rgba(0,112,243,0.12);border:1px solid rgba(0,112,243,0.25);border-radius:2rem;padding:.25rem .85rem;font-family:var(--font-mono);font-size:.65rem;color:#7EB8F7;}
+
+  /* SKILLS */
+  #skills{background:var(--bg);}
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+  .skill-category{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1.75rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+  .skill-category:hover{border-color:rgba(0,112,243,0.4);transform:translateY(-3px);}
+  .skill-category::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--sap-blue),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+  .skill-category:hover::after{transform:scaleX(1);}
+  .skill-cat-label{font-family:var(--font-mono);font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
+  .skill-cat-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:1.25rem;color:var(--text);}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .tag{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:.3rem;padding:.3rem .75rem;font-family:var(--font-mono);font-size:.72rem;color:var(--muted);transition:all .2s;}
+  .tag:hover{background:rgba(0,112,243,0.1);border-color:rgba(0,112,243,0.4);color:var(--text);}
+  .tag.hot{background:rgba(0,196,161,0.1);border-color:rgba(0,196,161,0.3);color:var(--accent);}
+  .abap-skill{margin-bottom:1.25rem;}
+  .abap-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
+  .abap-name{font-size:.82rem;color:var(--text);font-weight:500;}
+  .abap-pct{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);}
+  .abap-bar-bg{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+  .abap-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--sap-blue),var(--accent));width:0;transition:width 1.2s cubic-bezier(.23,1,.32,1);}
+
+  /* EXPERIENCE */
+  #experience{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .exp-card{background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:2.5rem;position:relative;overflow:hidden;}
+  .exp-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--sap-blue),var(--accent),var(--warm));}
+  .exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;}
+  .exp-role{font-family:var(--font-head);font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;}
+  .exp-company{font-family:var(--font-mono);font-size:.82rem;color:var(--sap-blue);}
+  .exp-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,196,161,0.12);border:1px solid rgba(0,196,161,0.3);border-radius:2rem;padding:.4rem 1rem;font-family:var(--font-mono);font-size:.72rem;color:var(--accent);white-space:nowrap;}
+  .exp-badge::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+  .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+  .exp-items h4{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+  .exp-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+  .exp-list li{font-size:.875rem;color:var(--text);padding-left:1.25rem;position:relative;line-height:1.6;}
+  .exp-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.6rem;top:.15rem;}
+
+  /* PROJECTS */
+  #projects{background:var(--bg);}
+  .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1.75rem;position:relative;overflow:hidden;transition:all .25s;}
+  .project-card:hover{border-color:rgba(0,112,243,0.4);transform:translateY(-4px);}
+  .project-card::before{content:'';position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle at 100% 0%,rgba(0,112,243,0.1) 0%,transparent 70%);pointer-events:none;}
+  .project-type{font-family:var(--font-mono);font-size:.65rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;}
+  .project-title{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.75rem;}
+  .project-desc{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.25rem;}
+  .project-tables{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .table-tag{background:rgba(0,51,102,0.5);border:1px solid rgba(0,112,243,0.2);border-radius:.2rem;padding:.2rem .5rem;font-family:var(--font-mono);font-size:.6rem;color:#7EB8F7;}
+
+  /* STRENGTHS */
+  #strengths{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .strengths-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+  .strength-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:2rem;text-align:center;transition:all .25s;position:relative;overflow:hidden;}
+  .strength-card:hover{border-color:rgba(0,196,161,0.4);transform:translateY(-4px);}
+  .strength-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,196,161,0.04) 0%,transparent 60%);pointer-events:none;}
+  .strength-icon{font-size:2.5rem;margin-bottom:1rem;display:block;}
+  .strength-card h3{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.5rem;}
+  .strength-card p{font-size:.85rem;color:var(--muted);line-height:1.65;}
+
+  /* EDUCATION */
+  #education{background:var(--bg);}
+  .edu-timeline{position:relative;padding-left:2rem;}
+  .edu-timeline::before{content:'';position:absolute;left:0;top:.5rem;bottom:.5rem;width:1px;background:linear-gradient(to bottom,var(--sap-blue),var(--accent),transparent);}
+  .edu-item{position:relative;padding-bottom:3rem;}
+  .edu-item:last-child{padding-bottom:0;}
+  .edu-item::before{content:'';position:absolute;left:-2.35rem;top:.35rem;width:10px;height:10px;border-radius:50%;background:var(--sap-blue);border:2px solid var(--bg);box-shadow:0 0 0 3px rgba(0,112,243,0.2);}
+  .edu-year{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);letter-spacing:.08em;margin-bottom:.4rem;}
+  .edu-degree{font-family:var(--font-head);font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+  .edu-school{font-size:.85rem;color:var(--muted);margin-bottom:.4rem;}
+  .edu-score{display:inline-flex;align-items:center;background:rgba(0,196,161,0.08);border:1px solid rgba(0,196,161,0.2);border-radius:2rem;padding:.25rem .85rem;font-family:var(--font-mono);font-size:.72rem;color:var(--accent);}
+
+  /* PERSONAL PROFILE */
+  #profile{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+  .profile-table{width:100%;}
+  .profile-table tr{border-bottom:1px solid var(--border);}
+  .profile-table tr:last-child{border-bottom:none;}
+  .profile-table td{padding:.85rem .5rem;font-size:.875rem;vertical-align:top;}
+  .profile-table td:first-child{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;width:38%;padding-right:1rem;padding-top:1rem;}
+  .profile-table td:last-child{color:var(--text);}
+  .hobbies-grid{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .hobby-tag{background:rgba(0,112,243,0.1);border:1px solid rgba(0,112,243,0.25);border-radius:2rem;padding:.3rem .85rem;font-size:.75rem;color:#7EB8F7;font-family:var(--font-mono);}
+  .declaration-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--sap-blue);border-radius:.75rem;padding:2rem;}
+  .declaration-box p{font-size:.9rem;color:var(--muted);line-height:1.85;font-style:italic;}
+  .declaration-sig{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+  .declaration-sig span{font-family:var(--font-head);font-size:1.1rem;color:var(--text);}
+  .declaration-sig small{display:block;font-family:var(--font-mono);font-size:.65rem;color:var(--muted);letter-spacing:.08em;margin-top:.25rem;}
+
+  /* CONTACT */
+  #contact{background:var(--bg);padding-bottom:6rem;}
+  .contact-wrap{max-width:700px;}
+  .contact-card{background:var(--surface);border:1px solid var(--border);border-radius:1.5rem;padding:3rem;position:relative;overflow:hidden;}
+  .contact-card::before{content:'';position:absolute;bottom:-50px;right:-50px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,161,0.08) 0%,transparent 70%);}
+  .contact-item{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border);}
+  .contact-item:last-child{border-bottom:none;}
+  .contact-icon{width:40px;height:40px;flex-shrink:0;border-radius:.5rem;background:rgba(0,112,243,0.12);border:1px solid rgba(0,112,243,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+  .contact-label{font-family:var(--font-mono);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;display:block;}
+  .contact-value{font-size:.9rem;color:var(--text);text-decoration:none;}
+  .contact-value:hover{color:var(--accent);}
+
+  footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
+  footer p{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);}
+  .footer-accent{font-family:var(--font-mono);font-size:.72rem;color:var(--accent);}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    #hero{padding:7rem 1.5rem 3rem;}
+    .section-wrap{padding:4rem 1.5rem;}
+    .about-grid,.training-grid,.exp-grid,.profile-grid{grid-template-columns:1fr;gap:2rem;}
+    .skills-grid,.strengths-grid,.projects-grid{grid-template-columns:1fr;}
+    footer{flex-direction:column;gap:.5rem;padding:1.5rem;text-align:center;}
+  }
+  @media(max-width:600px){.cards-grid{grid-template-columns:1fr;}.hero-stats{gap:1.5rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">CH<span>.</span>GNANESWAR</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#training">Training</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#strengths">Strengths</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to SAP ABAP roles · Available immediately</div>
+    <h1 class="hero-name">
+      <span class="line1">CHALLA<br></span>
+      <span class="line2">GNANESWAR</span>
+    </h1>
+    <div class="hero-sub">SAP ABAP Developer &nbsp;·&nbsp; SD &amp; MM Module Integration &nbsp;·&nbsp; Full-Cycle Implementation</div>
+    <p class="hero-desc">SAP ABAP Developer with hands-on experience in full-cycle SAP implementation projects. Proficient in ALV Reports, Smart Forms, Adobe Forms, BDC, ALE/IDoc, BAPI, Module Pool, and Enhancement Framework. Skilled in SD and MM module integration with a strong foundation in technical specification preparation and transport request management.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects →</a>
+      <a href="mailto:gnaneswar11.sap@gmail.com" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">1+</span><span class="stat-label">Year Experience</span></div>
+      <div class="stat-item"><span class="stat-num">14+</span><span class="stat-label">ABAP Objects Built</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Months SAP Training</span></div>
+      <div class="stat-item"><span class="stat-num">76%</span><span class="stat-label">B.Tech CGPA</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVE -->
+<section id="objective">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Career Objective</div>
+    <div class="objective-box reveal">
+      <div class="objective-quote">"</div>
+      <p>To give the best of my potential and enhance it through hard work, integrity, and rendering my services with complete dedication and commitment towards my work — fulfilling my job meticulously with utmost precision and quality to meet every challenge with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Who I Am</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="section-title">SAP ABAP Developer with implementation project experience</h2>
+        <p class="section-desc">Currently employed at <strong style="color:var(--sap-blue)">Inflow Technologies Pvt. Ltd.</strong> as an SAP ABAP Developer on a full-cycle SAP Implementation Project. Demonstrated ability to deliver custom ABAP solutions across SD and MM modules — from technical design to final transport.</p>
+        <p style="color:var(--muted);font-size:.875rem;line-height:1.8;">B.Tech in Computer Science &amp; Engineering (2025) from Pace Institute of Technology and Sciences, JNTU Kakinada. Completed 3 months of intensive SAP ABAP training. Strong work ethic, collaborative mindset, and commitment to quality delivery in every task.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">📋</div>
+          <h3>Technical Specification</h3>
+          <p>Prepares detailed technical specifications in collaboration with functional consultants, ensuring accurate mapping of business requirements to ABAP solutions.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚙️</div>
+          <h3>SD &amp; MM Integration</h3>
+          <p>Experienced in SAP SD and MM module integration — billing, inventory management, and POS distributor report development.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🚀</div>
+          <h3>End-to-End Delivery</h3>
+          <p>Manages full delivery lifecycle: from requirement analysis and development to testing, transport request preparation, and go-live support.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🤝</div>
+          <h3>Cross-Functional Collaboration</h3>
+          <p>Works effectively with functional consultants, business analysts, and project managers in remote SAP implementation environments.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section id="training">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Training Experience</div>
+    <h2 class="section-title">Structured SAP ABAP training</h2>
+    <p class="section-desc">Completed an intensive 3-month SAP ABAP training programme covering all core development areas before joining the implementation project.</p>
+    <div class="training-grid">
+      <div class="training-card reveal">
+        <span class="training-icon">📊</span>
+        <h3>Reports &amp; ALV</h3>
+        <p>Classical reports, interactive reports, and ALV grid reports including hierarchical sequential ALV lists for structured data output and drill-down navigation.</p>
+        <span class="training-badge">Classical · Interactive · ALV · Hierarchical</span>
+      </div>
+      <div class="training-card reveal">
+        <span class="training-icon">🖥️</span>
+        <h3>Module Pool Programming</h3>
+        <p>Screen design and Module Pool programming with dynpros, flow logic, and table controls for interactive SAP screen development.</p>
+        <span class="training-badge">Dynpro · Flow Logic · Table Control</span>
+      </div>
+      <div class="training-card reveal">
+        <span class="training-icon">📄</span>
+        <h3>Smart Forms &amp; BDC</h3>
+        <p>Designing Smart Forms for print output and Batch Data Communication programs using Call Transaction method for mass data uploads with table control handling.</p>
+        <span class="training-badge">Smart Forms · Call Transaction · BDC</span>
+      </div>
+      <div class="training-card reveal">
+        <span class="training-icon">🔗</span>
+        <h3>Cross-Application &amp; Technical Specs</h3>
+        <p>Basic cross-application integration covering ALE/IDoc concepts, BAPI usage, enhancement framework, and preparation of technical specification documents.</p>
+        <span class="training-badge">ALE · IDoc · BAPI · Tech Specs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Technical Arsenal</div>
+    <h2 class="section-title">Core SAP ABAP skills &amp;<br>technical competencies</h2>
+    <p class="section-desc">Comprehensive ABAP skill set built through structured training and active project delivery — covering the full spectrum of SAP development areas.</p>
+    <div class="skills-grid">
+      <div class="skill-category reveal">
+        <div class="skill-cat-label">Core ABAP</div>
+        <div class="skill-cat-title">Reporting &amp; ALV</div>
+        <div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Classical &amp; Interactive Reports</span><span class="abap-pct">85%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="85"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ALV Reports (OOABAP)</span><span class="abap-pct">80%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="80"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ABAP Dictionary</span><span class="abap-pct">80%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="80"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Module Pool</span><span class="abap-pct">70%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="70"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-cat-label">Forms &amp; Interfaces</div>
+        <div class="skill-cat-title">Output &amp; Integration</div>
+        <div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Smart Forms</span><span class="abap-pct">85%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="85"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Adobe Forms</span><span class="abap-pct">75%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="75"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">BDC (Call Transaction)</span><span class="abap-pct">78%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="78"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ALE / IDocs</span><span class="abap-pct">65%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="65"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-cat-label">Advanced</div>
+        <div class="skill-cat-title">Enhancements &amp; APIs</div>
+        <div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Enhancement Framework</span><span class="abap-pct">72%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="72"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">BAPI Implementation</span><span class="abap-pct">68%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="68"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">User Exits / BADIs</span><span class="abap-pct">65%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="65"></div></div></div>
+          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Debugging</span><span class="abap-pct">78%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="78"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:2rem;">
+      <div class="skill-cat-label" style="margin-bottom:1rem;">All Technologies &amp; Tools</div>
+      <div class="skill-tags">
+        <span class="tag hot">SAP ABAP</span><span class="tag hot">ALV Reports</span><span class="tag hot">Smart Forms</span><span class="tag hot">Adobe Forms</span>
+        <span class="tag">BDC</span><span class="tag">ALE / IDocs</span><span class="tag">BAPI</span><span class="tag">OOABAP</span><span class="tag">Module Pool</span>
+        <span class="tag">Enhancement Framework</span><span class="tag">User Exits</span><span class="tag">BADIs</span><span class="tag">ABAP Dictionary</span>
+        <span class="tag">SD Module</span><span class="tag">MM Module</span><span class="tag">HR Module</span><span class="tag">FI Module</span>
+        <span class="tag">Transport Requests</span><span class="tag">Debugging</span><span class="tag">C</span><span class="tag">Core Java</span><span class="tag">MS Office</span><span class="tag">Windows</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Work Experience</div>
+    <h2 class="section-title">Professional experience</h2>
+    <p class="section-desc">Actively contributing to a live SAP implementation project, delivering production-grade ABAP solutions since February 2025.</p>
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">SAP ABAP Developer</div>
+          <div class="exp-company">Inflow Technologies Pvt. Ltd. &nbsp;·&nbsp; Implementation Project &nbsp;·&nbsp; Remote, India</div>
+        </div>
+        <div class="exp-badge">Feb 2025 – Present</div>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-items">
+          <h4>Key Responsibilities</h4>
+          <ul class="exp-list">
+            <li>Worked as SAP ABAP Developer in a full-cycle SAP Implementation Project delivering end-to-end custom solutions.</li>
+            <li>Developed and delivered custom ABAP Reports, ALV outputs, Smart Forms, BDC programs, and Enhancements as implementation deliverables.</li>
+            <li>Involved in SD and MM module integration handling billing, inventory, and POS distributor report development.</li>
+            <li>Collaborated with functional consultants to prepare technical specifications and manage transport requests for client delivery.</li>
+            <li>Designed and implemented Smart Forms and Adobe Forms for print output — Invoice, PO, Delivery Challan, and Appraisals.</li>
+          </ul>
+        </div>
+        <div class="exp-items">
+          <h4>Key Deliverables</h4>
+          <ul class="exp-list">
+            <li>Invoice Details ALV Report integrating VBRK, VBRP, KNA1, KONV, VBKP, VBFA, and J_1IEXCHDR tables.</li>
+            <li>PR to GR ALV Report tracking full procurement cycle (EBAN, EKKO, EKPO, MSEG).</li>
+            <li>Screen Enhancements (VBELN, FKDAT) in VF01/VF02/VF03 and field enhancements (HKONT, DMBTR) in FB03 via Enhancement Framework.</li>
+            <li>ALE/IDoc for Material Master distribution (MATMAS) and custom Customer IDoc for Delivery Challan dispatch.</li>
+            <li>BAPI implementation for Sales Order status check and Bank creation in SAP R/3 system.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-eyebrow">ABAP Objects</div>
+    <h2 class="section-title">ABAP development portfolio</h2>
+    <p class="section-desc">All ABAP objects developed across training and live implementation — reports, forms, BDC, enhancements, ALE/IDoc, and BAPI integrations.</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-type">ALV Report · SD Module</div>
+        <div class="project-title">Invoice Details Report</div>
+        <div class="project-desc">Full ALV grid report displaying invoice billing documents, customer master data, pricing conditions, and excise header details for SD billing reconciliation.</div>
+        <div class="project-tables"><span class="table-tag">VBRK</span><span class="table-tag">VBRP</span><span class="table-tag">KNA1</span><span class="table-tag">KONV</span><span class="table-tag">VBKP</span><span class="table-tag">VBFA</span><span class="table-tag">J_1IEXCHDR</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">Interactive Report · MM Module</div>
+        <div class="project-title">Purchase Order Details Report</div>
+        <div class="project-desc">Interactive drill-down ALV report displaying PO header and line-item data with navigation from summary to item details for MM procurement tracking.</div>
+        <div class="project-tables"><span class="table-tag">EKKO</span><span class="table-tag">EKPO</span><span class="table-tag">MARA</span><span class="table-tag">MAKT</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">ALV Report · MM Module</div>
+        <div class="project-title">PR to GR Report</div>
+        <div class="project-desc">ALV report tracking the full procurement cycle from Purchase Requisition through Purchase Order to Goods Receipt — enabling end-to-end MM procurement visibility.</div>
+        <div class="project-tables"><span class="table-tag">EBAN</span><span class="table-tag">EKKO</span><span class="table-tag">EKPO</span><span class="table-tag">MSEG</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">OOABAP ALV Report · FI Module</div>
+        <div class="project-title">Vendor Aging Report</div>
+        <div class="project-desc">Object-oriented ABAP ALV report for vendor outstanding and cleared items — enabling financial aging analysis across open and cleared FI line items.</div>
+        <div class="project-tables"><span class="table-tag">BSIK</span><span class="table-tag">BSAK</span><span class="table-tag">LFA1</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">Hierarchical ALV · MM / BOM</div>
+        <div class="project-title">Packing Cost Material Report</div>
+        <div class="project-desc">Hierarchical sequential ALV report displaying BOM-based packing cost material data with parent-child structure for material valuation analysis.</div>
+        <div class="project-tables"><span class="table-tag">MAST</span><span class="table-tag">STKO</span><span class="table-tag">STPO</span><span class="table-tag">MBEW</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">ALV Report · HR Module</div>
+        <div class="project-title">Employee Details Report</div>
+        <div class="project-desc">Comprehensive Employee Details Report using HR InfoTypes covering organisational assignment, personal data, medical, family member, loans, and education information.</div>
+        <div class="project-tables"><span class="table-tag">IT-0001</span><span class="table-tag">IT-0002</span><span class="table-tag">IT-0021</span><span class="table-tag">IT-0022</span><span class="table-tag">IT-0028</span><span class="table-tag">IT-0151</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">Smart Forms · HR &amp; SD</div>
+        <div class="project-title">Invoice Print &amp; Employee Appraisal Forms</div>
+        <div class="project-desc">Designed Smart Forms for SD Invoice Printing and a combined screen + form for structured Employee Appraisal documentation using HR InfoTypes.</div>
+        <div class="project-tables"><span class="table-tag">Invoice Print</span><span class="table-tag">Appraisal Screen</span><span class="table-tag">HR InfoTypes</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">Adobe Forms · MM &amp; SD</div>
+        <div class="project-title">Purchase Order &amp; Delivery Challan Forms</div>
+        <div class="project-desc">Designed Adobe Form interfaces and layouts for Purchase Order output and Delivery Challan documentation, compliant with SAP print workbench architecture.</div>
+        <div class="project-tables"><span class="table-tag">PO Adobe Form</span><span class="table-tag">Delivery Challan</span><span class="table-tag">Form Interface</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">BDC · MM &amp; SD</div>
+        <div class="project-title">Pricing Master &amp; Purchase Order Upload</div>
+        <div class="project-desc">BDC programs using Call Transaction method for bulk upload of Pricing Master records (VK11) and Purchase Orders (ME21N) with table control navigation.</div>
+        <div class="project-tables"><span class="table-tag">VK11</span><span class="table-tag">ME21N</span><span class="table-tag">Call Transaction</span><span class="table-tag">Table Control</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">Enhancement Framework · SD &amp; FI</div>
+        <div class="project-title">Screen &amp; Field Enhancements</div>
+        <div class="project-desc">Screen enhancements (VBELN, FKDAT) in VF01/VF02/VF03 and custom field additions (HKONT, DMBTR) in FB03 transaction using Enhancement Framework.</div>
+        <div class="project-tables"><span class="table-tag">VF01</span><span class="table-tag">VF02</span><span class="table-tag">VF03</span><span class="table-tag">FB03</span><span class="table-tag">Enh. Framework</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">ALE / IDoc · MM</div>
+        <div class="project-title">Material Master Distribution &amp; Custom IDoc</div>
+        <div class="project-desc">Configured MATMAS IDoc for Material Master ALE distribution across systems; created a custom Customer IDoc for dispatching Delivery Challan details.</div>
+        <div class="project-tables"><span class="table-tag">MATMAS</span><span class="table-tag">Custom IDoc</span><span class="table-tag">ALE Config</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-type">BAPI · SD &amp; FI</div>
+        <div class="project-title">Sales Order Status Check &amp; Bank Creation</div>
+        <div class="project-desc">Implemented BAPI for checking Sales Order status in R/3 and a separate BAPI for Bank master record creation — demonstrating RFC-enabled function module integration.</div>
+        <div class="project-tables"><span class="table-tag">BAPI_SALESORDER_GETSTATUS</span><span class="table-tag">BAPI_BANK_CREATE</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STRENGTHS -->
+<section id="strengths">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Core Strengths</div>
+    <h2 class="section-title">What drives me every day</h2>
+    <p class="section-desc">Personal qualities that shape my approach to work, teamwork, and professional growth in every SAP project.</p>
+    <div class="strengths-grid">
+      <div class="strength-card reveal">
+        <span class="strength-icon">🤝</span>
+        <h3>Cooperative Team Attitude</h3>
+        <p>A genuine team player who works co-operatively with colleagues, adapts to team dynamics, and ensures shared goals are met with a positive and collaborative attitude.</p>
+      </div>
+      <div class="strength-card reveal">
+        <span class="strength-icon">🎯</span>
+        <h3>Dedication Towards Tasks</h3>
+        <p>Highly dedicated to every assigned task — from writing ABAP reports to preparing technical specifications — ensuring each deliverable meets quality standards consistently.</p>
+      </div>
+      <div class="strength-card reveal">
+        <span class="strength-icon">💪</span>
+        <h3>Patience &amp; Hard Work</h3>
+        <p>Approaches complex debugging, tight deadlines, and challenging requirements with patience and consistent hard work — never cutting corners on quality or accuracy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Education</div>
+    <h2 class="section-title">Education &amp; qualifications</h2>
+    <p class="section-desc">Strong academic record in Computer Science Engineering, complemented by specialised SAP ABAP training and active industry experience.</p>
+    <div class="edu-timeline">
+      <div class="edu-item reveal">
+        <div class="edu-year">2021 – 2025</div>
+        <div class="edu-degree">B.Tech — Computer Science &amp; Engineering</div>
+        <div class="edu-school">Pace Institute of Technology and Sciences, Ongole &nbsp;·&nbsp; JNTU Kakinada</div>
+        <span class="edu-score">76.38%</span>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-year">2019 – 2021</div>
+        <div class="edu-degree">Intermediate (MPC)</div>
+        <div class="edu-school">D.N.M Junior College, Inkollu &nbsp;·&nbsp; Board of Intermediate Education, AP</div>
+        <span class="edu-score">73.08%</span>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-year">2018</div>
+        <div class="edu-degree">S.S.C (Class X)</div>
+        <div class="edu-school">Z.P High School, Chandalur &nbsp;·&nbsp; Board of Secondary Education, AP</div>
+        <span class="edu-score">88.00%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL PROFILE -->
+<section id="profile">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Personal Profile</div>
+    <h2 class="section-title">A little more about me</h2>
+    <p class="section-desc">Personal background, interests, and my professional declaration — the person behind the code.</p>
+    <div class="profile-grid">
+      <div>
+        <table class="profile-table">
+          <tr><td>Father's Name</td><td>Ch. Srinivasa Rao</td></tr>
+          <tr><td>Gender</td><td>Male</td></tr>
+          <tr><td>Date of Birth</td><td>11th August 2003</td></tr>
+          <tr><td>Nationality</td><td>Indian</td></tr>
+          <tr><td>Languages Known</td><td>English &nbsp;·&nbsp; Telugu &nbsp;·&nbsp; Hindi</td></tr>
+          <tr>
+            <td>Hobbies</td>
+            <td>
+              <div class="hobbies-grid">
+                <span class="hobby-tag">🎬 Watching Movies</span>
+                <span class="hobby-tag">🌐 Browsing</span>
+                <span class="hobby-tag">🏏 Cricket</span>
+                <span class="hobby-tag">♟️ Chess</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="declaration-box reveal">
+        <p>I hereby declare that all the details furnished in this portfolio are true to the best of my knowledge and belief. I take full responsibility for the accuracy and integrity of every piece of information presented here.</p>
+        <div class="declaration-sig">
+          <span>Ch. Gnaneswar</span>
+          <small>SAP ABAP Developer &nbsp;·&nbsp; Chandalur, Andhra Pradesh</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Let's Connect</div>
+    <h2 class="section-title">Available for SAP ABAP roles</h2>
+    <p class="section-desc" style="margin-bottom:2.5rem;">Looking for SAP ABAP Developer positions — full-time, contract, or implementation projects. Open to on-site, hybrid, and remote opportunities across India.</p>
+    <div class="contact-wrap">
+      <div class="contact-card reveal">
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><span class="contact-label">Email</span><a href="mailto:gnaneswar11.sap@gmail.com" class="contact-value">gnaneswar11.sap@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div><span class="contact-label">Mobile</span><a href="tel:+919347069500" class="contact-value">+91 93470 69500</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><span class="contact-label">Location</span><span class="contact-value">H No 3-98, Chandalur, J.Panguluru, Bapatla, Andhra Pradesh – 523214</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🌐</div>
+          <div><span class="contact-label">Languages</span><span class="contact-value">English &nbsp;·&nbsp; Telugu &nbsp;·&nbsp; Hindi</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🎂</div>
+          <div><span class="contact-label">Date of Birth</span><span class="contact-value">11th August 2003</span></div>
+        </div>
+        <div style="margin-top:2rem;">
+          <a href="mailto:gnaneswar11.sap@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center;font-size:.95rem;padding:1rem;">Send me an email →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Challa Gnaneswar · SAP ABAP Developer · Andhra Pradesh, India</p>
+  <span class="footer-accent">SAP ABAP · ALV · Smart Forms · BDC · ALE/IDoc · BAPI</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  const bars = document.querySelectorAll('.abap-bar-fill');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => { entry.target.style.width = entry.target.dataset.w + '%'; }, 200);
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => barObserver.observe(b));
+</script>
+</body>
+</html>
