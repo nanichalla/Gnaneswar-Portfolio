@@ -112,6 +112,12 @@
   .exp-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
   .exp-list li{font-size:.875rem;color:var(--text);padding-left:1.25rem;position:relative;line-height:1.6;}
   .exp-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.6rem;top:.15rem;}
+  .experience-list{display:flex;flex-direction:column;gap:1.5rem;}
+  .experience-list .exp-card{padding:2rem 2.25rem;}
+  .experience-list .exp-list{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 2rem;}
+  .skill-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+  .skill-list li{font-size:.82rem;color:var(--muted);padding-left:1rem;position:relative;line-height:1.5;}
+  .skill-list li::before{content:'•';position:absolute;left:0;color:var(--accent);}
 
   /* PROJECTS */
   #projects{background:var(--bg);}
@@ -190,6 +196,7 @@
     .section-wrap{padding:4rem 1.5rem;}
     .about-grid,.training-grid,.exp-grid,.profile-grid{grid-template-columns:1fr;gap:2rem;}
     .skills-grid,.strengths-grid,.projects-grid{grid-template-columns:1fr;}
+    .experience-list .exp-list{grid-template-columns:1fr;}
     footer{flex-direction:column;gap:.5rem;padding:1.5rem;text-align:center;}
   }
   @media(max-width:600px){.cards-grid{grid-template-columns:1fr;}.hero-stats{gap:1.5rem;}}
@@ -221,8 +228,8 @@
       <span class="line1">CHALLA<br></span>
       <span class="line2">GNANESWAR</span>
     </h1>
-    <div class="hero-sub">SAP ABAP Developer &nbsp;·&nbsp; SD &amp; MM Module Integration &nbsp;·&nbsp; Full-Cycle Implementation</div>
-    <p class="hero-desc">SAP ABAP Developer with hands-on experience in full-cycle SAP implementation projects. Proficient in ALV Reports, Smart Forms, Adobe Forms, BDC, ALE/IDoc, BAPI, Module Pool, and Enhancement Framework. Skilled in SD and MM module integration with a strong foundation in technical specification preparation and transport request management.</p>
+    <div class="hero-sub">SAP ABAP Developer &nbsp;·&nbsp; SAP BTP Integration &nbsp;·&nbsp; Full-Cycle Implementation</div>
+    <p class="hero-desc">SAP ABAP Developer with experience across SAP implementation and support projects. Proficient in ALV Reports, Smart Forms, Adobe Forms, BDC, BAPI, ALE/IDoc, RAP, CDS Views, OO ABAP, and Enhancement Framework. Skilled in SD, MM, and FI integration with a strong focus on performance optimization, debugging, technical specifications, and transport management.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">View Projects →</a>
       <a href="mailto:gnaneswar11.sap@gmail.com" class="btn btn-ghost">Get in Touch</a>
@@ -326,46 +333,46 @@
     <p class="section-desc">Comprehensive ABAP skill set built through structured training and active project delivery — covering the full spectrum of SAP development areas.</p>
     <div class="skills-grid">
       <div class="skill-category reveal">
+        <div class="skill-cat-label">SAP Technologies</div>
+        <div class="skill-cat-title">SAP Platform</div>
+        <ul class="skill-list">
+          <li>SAP ABAP</li>
+          <li>RAP</li>
+          <li>CDS Views</li>
+          <li>Basic Fiori</li>
+          <li>Joule</li>
+          <li>OO ABAP</li>
+          <li>OData (Basics)</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-cat-label">Development</div>
+        <div class="skill-cat-title">ABAP Development</div>
+        <ul class="skill-list">
+          <li>ALV Reports</li>
+          <li>RAP Reports</li>
+          <li>Smart Forms</li>
+          <li>Adobe Forms</li>
+          <li>BDC</li>
+          <li>BAPI</li>
+          <li>IDoc</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal">
         <div class="skill-cat-label">Core ABAP</div>
-        <div class="skill-cat-title">Reporting &amp; ALV</div>
-        <div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Classical &amp; Interactive Reports</span><span class="abap-pct">85%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="85"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ALV Reports (OOABAP)</span><span class="abap-pct">80%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="80"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ABAP Dictionary</span><span class="abap-pct">80%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="80"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Module Pool</span><span class="abap-pct">70%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="70"></div></div></div>
-        </div>
-      </div>
-      <div class="skill-category reveal">
-        <div class="skill-cat-label">Forms &amp; Interfaces</div>
-        <div class="skill-cat-title">Output &amp; Integration</div>
-        <div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Smart Forms</span><span class="abap-pct">85%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="85"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Adobe Forms</span><span class="abap-pct">75%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="75"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">BDC (Call Transaction)</span><span class="abap-pct">78%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="78"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">ALE / IDocs</span><span class="abap-pct">65%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="65"></div></div></div>
-        </div>
-      </div>
-      <div class="skill-category reveal">
-        <div class="skill-cat-label">Advanced</div>
-        <div class="skill-cat-title">Enhancements &amp; APIs</div>
-        <div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Enhancement Framework</span><span class="abap-pct">72%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="72"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">BAPI Implementation</span><span class="abap-pct">68%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="68"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">User Exits / BADIs</span><span class="abap-pct">65%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="65"></div></div></div>
-          <div class="abap-skill"><div class="abap-label"><span class="abap-name">Debugging</span><span class="abap-pct">78%</span></div><div class="abap-bar-bg"><div class="abap-bar-fill" data-w="78"></div></div></div>
-        </div>
+        <div class="skill-cat-title">Technical Competencies</div>
+        <ul class="skill-list">
+          <li>Open SQL</li>
+          <li>ABAP Dictionary</li>
+          <li>Enhancements</li>
+          <li>Debugging</li>
+          <li>Internal Tables</li>
+          <li>Field Symbols</li>
+          <li>Performance Tuning</li>
+        </ul>
       </div>
     </div>
-    <div style="margin-top:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:2rem;">
-      <div class="skill-cat-label" style="margin-bottom:1rem;">All Technologies &amp; Tools</div>
-      <div class="skill-tags">
-        <span class="tag hot">SAP ABAP</span><span class="tag hot">ALV Reports</span><span class="tag hot">Smart Forms</span><span class="tag hot">Adobe Forms</span>
-        <span class="tag">BDC</span><span class="tag">ALE / IDocs</span><span class="tag">BAPI</span><span class="tag">OOABAP</span><span class="tag">Module Pool</span>
-        <span class="tag">Enhancement Framework</span><span class="tag">User Exits</span><span class="tag">BADIs</span><span class="tag">ABAP Dictionary</span>
-        <span class="tag">SD Module</span><span class="tag">MM Module</span><span class="tag">HR Module</span><span class="tag">FI Module</span>
-        <span class="tag">Transport Requests</span><span class="tag">Debugging</span><span class="tag">C</span><span class="tag">Core Java</span><span class="tag">MS Office</span><span class="tag">Windows</span>
-      </div>
-    </div>
+
   </div>
 </section>
 
@@ -374,36 +381,76 @@
   <div class="section-wrap">
     <div class="section-eyebrow">Work Experience</div>
     <h2 class="section-title">Professional experience</h2>
-    <p class="section-desc">Actively contributing to a live SAP implementation project, delivering production-grade ABAP solutions since February 2025.</p>
-    <div class="exp-card reveal">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">SAP ABAP Developer</div>
-          <div class="exp-company">Inflow Technologies Pvt. Ltd. &nbsp;·&nbsp; Implementation Project &nbsp;·&nbsp; Remote, India</div>
+    <p class="section-desc">Experience across SAP implementation and support projects, delivering ABAP reports, forms, interfaces, enhancements, and integration solutions.</p>
+
+    <div class="experience-list">
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">SAP ABAP Consultant</div>
+            <div class="exp-company">DYNAMO INFO TECHNOLOGIES PVT LTD &nbsp;·&nbsp; Implementation Project &nbsp;·&nbsp; Client: Inflow Technologies Pvt. Ltd. &nbsp;·&nbsp; Bengaluru, India</div>
+          </div>
+          <div class="exp-badge">Feb 2026 – Jun 2026</div>
         </div>
-        <div class="exp-badge">Feb 2025 – Present</div>
+        <ul class="exp-list">
+          <li>Worked as an SAP ABAP Developer in a full-cycle SAP implementation project.</li>
+          <li>Developed SAP Reports, ALV Reports, Smart Forms, BDC Programs, and Enhancements.</li>
+          <li>Worked on SD and MM modules involving Billing, Inventory Management, and POS Distributor Reports.</li>
+          <li>Collaborated with functional consultants to prepare Technical Specifications and Transport Requests.</li>
+          <li>Improved SQL performance using JOINs and optimized SELECT statements inside loops.</li>
+        </ul>
       </div>
-      <div class="exp-grid">
-        <div class="exp-items">
-          <h4>Key Responsibilities</h4>
-          <ul class="exp-list">
-            <li>Worked as SAP ABAP Developer in a full-cycle SAP Implementation Project delivering end-to-end custom solutions.</li>
-            <li>Developed and delivered custom ABAP Reports, ALV outputs, Smart Forms, BDC programs, and Enhancements as implementation deliverables.</li>
-            <li>Involved in SD and MM module integration handling billing, inventory, and POS distributor report development.</li>
-            <li>Collaborated with functional consultants to prepare technical specifications and manage transport requests for client delivery.</li>
-            <li>Designed and implemented Smart Forms and Adobe Forms for print output — Invoice, PO, Delivery Challan, and Appraisals.</li>
-          </ul>
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">SAP ABAP Developer</div>
+            <div class="exp-company">Client: Godrej &nbsp;·&nbsp; SAP Support Project &nbsp;·&nbsp; Kadapa, India</div>
+          </div>
+          <div class="exp-badge">Apr 2026 – Present</div>
         </div>
-        <div class="exp-items">
-          <h4>Key Deliverables</h4>
-          <ul class="exp-list">
-            <li>Invoice Details ALV Report integrating VBRK, VBRP, KNA1, KONV, VBKP, VBFA, and J_1IEXCHDR tables.</li>
-            <li>PR to GR ALV Report tracking full procurement cycle (EBAN, EKKO, EKPO, MSEG).</li>
-            <li>Screen Enhancements (VBELN, FKDAT) in VF01/VF02/VF03 and field enhancements (HKONT, DMBTR) in FB03 via Enhancement Framework.</li>
-            <li>ALE/IDoc for Material Master distribution (MATMAS) and custom Customer IDoc for Delivery Challan dispatch.</li>
-            <li>BAPI implementation for Sales Order status check and Bank creation in SAP R/3 system.</li>
-          </ul>
+        <ul class="exp-list">
+          <li>Developed and enhanced ABAP Reports, Smart Forms, and BDC programs.</li>
+          <li>Performed debugging and root-cause analysis for production issues.</li>
+          <li>Implemented SD and MM enhancements based on business requirements.</li>
+          <li>Optimized SQL queries and prepared Technical Specifications and Transport Requests.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">SAP ABAP Developer</div>
+            <div class="exp-company">Client: XINDIA &nbsp;·&nbsp; SAP Support Project &nbsp;·&nbsp; Kadapa, India</div>
+          </div>
+          <div class="exp-badge">Apr 2026 – Present</div>
         </div>
+        <ul class="exp-list">
+          <li>Supported production tickets, bug fixes, and enhancement requests.</li>
+          <li>Developed custom ALV Reports and Form developments.</li>
+          <li>Worked on integration involving Billing, Stock Movements, and Reporting.</li>
+          <li>Coordinated with cross-functional teams for requirement analysis, testing, and transport management.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">SAP ABAP Developer</div>
+            <div class="exp-company">Client: CGAPL &nbsp;·&nbsp; Implementation Project &nbsp;·&nbsp; Goa, India</div>
+          </div>
+          <div class="exp-badge">Jul 2026 – Present</div>
+        </div>
+        <ul class="exp-list">
+          <li>Developed custom reports including Collection Report, Cash Flow Report, Order Intake Report, and Sales Register Report.</li>
+          <li>Designed and developed SAP Smart Forms and SAPScript print forms for business documents.</li>
+          <li>Developed and enhanced custom APIs for Bank Integration to automate payment processing and banking interfaces.</li>
+          <li>Created custom ALV Reports with advanced selection screens, dynamic field catalogs, validations, and performance optimization.</li>
+          <li>Worked extensively on SD, MM, and FI modules involving Billing, Sales Orders, Collections, Customer Payments, and Financial Reporting.</li>
+          <li>Developed interfaces using REST APIs and integrated SAP with external banking systems.</li>
+          <li>Performed unit testing, defect fixing, transport management, and supported UAT and production deployment activities.</li>
+          <li>Collaborated with functional consultants and business users during requirement gathering, development, testing, and go-live support.</li>
+        </ul>
       </div>
     </div>
   </div>
